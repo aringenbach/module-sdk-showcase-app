@@ -1,0 +1,54 @@
+import("../element-x-ios/fastlane/Fastfile")
+
+lane :config_custom do
+    # Configure XCodeGen targets.
+    configure_project()
+    configure_elementx_target()
+  
+    # Regenerate project.
+    xcodegen(spec: "./element-x-ios/project.yml")
+
+    # Replace app icons.
+    replace_app_icon()
+  end
+
+  private_lane :configure_project do
+    # Load project.yml.
+    target_file_path = "../element-x-ios/project.yml"
+    data = YAML.load_file target_file_path
+  
+    # Set custom identifiers.
+    data["settings"]["BASE_APP_GROUP_IDENTIFIER"] = "io.element.custom"
+    data["settings"]["BASE_BUNDLE_IDENTIFIER"] = "io.element.elementx.custom"
+
+    # Set ModuleSDKConfig dependency.
+    data["packages"]["ModuleSDKConfig"]["path"] = "../ModuleSDKConfig"
+
+    # Set the actual ModuleSDK to be the same distant repository as Modules are targeting.
+    # Ideally Modules would just target the local package, but XCode building things into DerivedData
+    # and the lack of good Package.swift editing tools can make this step complicated.
+    # Though we could build a script that clones all packages expected in the configuration
+    # and go for a `all local` solution and avoid having the need for a standalone version of ModuleSDK.
+    data["packages"]["ModuleSDK"] = { "url" => "https://github.com/aringenbach/ModuleSDK", "exactVersion" => "0.0.1" }
+
+    # Save changes.
+    File.open(target_file_path, 'w') { |f| YAML.dump(data, f) }
+  end
+
+  private_lane :configure_elementx_target do
+    # Load ElementX target.
+    app_target_file_path = "../element-x-ios/ElementX/SupportingFiles/target.yml"
+    app_data = YAML.load_file app_target_file_path
+
+    # Rename app product.
+    app_data["targets"]["ElementX"]["settings"]["base"]["PRODUCT_NAME"] = "ModuleSDK Showcase App"
+
+    # Save changes.
+    File.open(app_target_file_path, 'w') { |f| YAML.dump(app_data, f) }
+  end
+
+  private_lane :replace_app_icon do
+    # Remove the original set in case it's named differently.
+    sh("rm ../element-x-ios/ElementX/Resources/Assets.xcassets/AppIcon.appiconset/*")
+    sh("cp -r ../Resources/Assets.xcassets/AppIcon.appiconset ../element-x-ios/ElementX/Resources/Assets.xcassets/")
+  end

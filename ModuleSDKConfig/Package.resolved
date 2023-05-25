@@ -1,0 +1,41 @@
+{
+  "pins" : [
+    {
+      "identity" : "matrix-rust-components-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/matrix-org/matrix-rust-components-swift",
+      "state" : {
+        "revision" : "937bd40d601b59d676c18e466fd111925e498799",
+        "version" : "1.0.65-alpha"
+      }
+    },
+    {
+      "identity" : "modulesdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/aringenbach/ModuleSDK",
+      "state" : {
+        "branch" : "main",
+        "revision" : "a97f46bb6334734a3adf483db74469f47b3b88d0"
+      }
+    },
+    {
+      "identity" : "onboardingtitleprovider",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/aringenbach/onboardingTitleProvider",
+      "state" : {
+        "branch" : "main",
+        "revision" : "c15720acbb0fcde783385a0a44b17f1af65648a1"
+      }
+    },
+    {
+      "identity" : "rustsdkmodule",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/aringenbach/rustSDKModule",
+      "state" : {
+        "branch" : "main",
+        "revision" : "5833b993e209f8d9de2a25bbafe5ec152c2441ef"
+      }
+    }
+  ],
+  "version" : 2
+}
