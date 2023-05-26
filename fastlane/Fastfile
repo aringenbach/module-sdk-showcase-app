@@ -29,7 +29,7 @@ lane :config_custom do
     # and the lack of good Package.swift editing tools can make this step complicated.
     # Though we could build a script that clones all packages expected in the configuration
     # and go for a `all local` solution and avoid having the need for a standalone version of ModuleSDK.
-    data["packages"]["ModuleSDK"] = { "url" => "https://github.com/aringenbach/ModuleSDK", "exactVersion" => "0.0.1" }
+    # data["packages"]["ModuleSDK"] = { "url" => "https://github.com/aringenbach/ModuleSDK", "exactVersion" => "0.0.1" }
 
     # Save changes.
     File.open(target_file_path, 'w') { |f| YAML.dump(data, f) }

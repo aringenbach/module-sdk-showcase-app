@@ -14,17 +14,17 @@ let package = Package(
             targets: ["ModuleSDKConfig"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/aringenbach/ModuleSDK", exact: "0.0.1"),
-        .package(url: "https://github.com/aringenbach/onboardingTitleProvider", branch: "main"),
-        .package(url: "https://github.com/aringenbach/rustSDKModule", branch: "main"),
+        .package(path: "../element-x-ios/Modules/ModuleSDK"),
+        .package(path: "../Modules/OnboardingTitleProvider"),
+        .package(path: "../Modules/RustSDKModule"),
     ],
     targets: [
         .target(
             name: "ModuleSDKConfig",
             dependencies: [
                 "ModuleSDK",
-                .product(name: "OnboardingTitleProvider", package: "onboardingTitleProvider"),
-                .product(name: "RustSDKModule", package: "rustSDKModule"),
+                "OnboardingTitleProvider",
+                "RustSDKModule",
             ],
             path: "Sources"
         ),
